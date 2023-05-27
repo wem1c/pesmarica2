@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+#first {
+    background-image: url('../images/background.jpg');
+    height: 100vh;
+    background-color: #000;
+    background-size: cover;
+    background-position: center;
+  }
+
+section#hero{
+    height:calc(100vh - 60px);
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+  }
+  
+  #hero h1{
+    font-size: 3rem;
+    margin-bottom:1rem ;
+  }
