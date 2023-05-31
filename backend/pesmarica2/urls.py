@@ -19,12 +19,14 @@ from rest_framework import routers
 from songs import views
 
 
+# https://www.django-rest-framework.org/tutorial/quickstart/#urls
+#
+# Because we're using viewsets instead of views, we can automatically generate
+# the URL conf for our API, by simply registering the viewsets with a router class.
 router = routers.DefaultRouter()
 router.register(r'songs', views.SongViewSet)
 
 urlpatterns = [
-    # path('api/songs/', include('songs.urls')),
-    # path('api/auth/', include('authentication.urls')),
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
 ]
