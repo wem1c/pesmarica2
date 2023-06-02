@@ -22,6 +22,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/browse" element={<BrowseSongs />}/>
           <Route path="/addNewSong" element={<AddNewSong />}/>
+          <Route path="/author" element={<Author />}/>
           <Route path="/author/:authorId" element={<Author />}/>
           <Route path="/song/:songId" element={<Song />}/>
           <Route path="/favorites/:userId" element={<Favorites />}/>
