@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const SongListComponent = (props) => {
+const SongList = (props) => {
   const songs = props.songs 
 
   return (
@@ -15,4 +15,4 @@ const SongListComponent = (props) => {
   );
 };
 
-export default SongListComponent;
+export default SongList;
