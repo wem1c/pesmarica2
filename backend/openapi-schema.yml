@@ -160,6 +160,163 @@ paths:
           description: ''
       tags:
       - api
+  /api/artists/:
+    get:
+      operationId: listArtists
+      description: API endpoint that allows songs to be viewed or edited.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Artist'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createArtist
+      description: API endpoint that allows songs to be viewed or edited.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Artist'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Artist'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Artist'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artist'
+          description: ''
+      tags:
+      - api
+  /api/artists/{id}/:
+    get:
+      operationId: retrieveArtist
+      description: API endpoint that allows songs to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this artist.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artist'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateArtist
+      description: API endpoint that allows songs to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this artist.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Artist'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Artist'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Artist'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artist'
+          description: ''
+      tags:
+      - api
+    patch:
+      operationId: partialUpdateArtist
+      description: API endpoint that allows songs to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this artist.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Artist'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Artist'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Artist'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artist'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyArtist
+      description: API endpoint that allows songs to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this artist.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
   /api/auth/users/:
     get:
       operationId: listUsers
@@ -723,14 +880,56 @@ components:
     Song:
       type: object
       properties:
+        url:
+          type: string
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
         title:
           type: string
           maxLength: 100
+        album:
+          type: string
+          maxLength: 100
+        artist:
+          type: string
+        genre:
+          type: string
+          maxLength: 100
+        year:
+          type: integer
         lyrics:
           type: string
+        owner:
+          type: string
+          readOnly: true
       required:
       - title
+      - album
+      - artist
+      - genre
+      - year
       - lyrics
+    Artist:
+      type: object
+      properties:
+        url:
+          type: string
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        songs:
+          type: array
+          items:
+            type: string
+      required:
+      - name
+      - songs
     User:
       type: object
       properties:
