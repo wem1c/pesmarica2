@@ -22,7 +22,7 @@ from songs import urls as songs_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(songs_urls)),
-        path('api/schema', get_schema_view(
+    path('api/schema', get_schema_view(
         title="Pesmarica2 API",
         version="1.0.0"
     ), name='openapi-schema'),
