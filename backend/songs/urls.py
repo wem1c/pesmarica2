@@ -7,6 +7,7 @@ from . import views
 
 router = DefaultRouter()
 router.register(r'songs', views.SongViewSet)
+router.register(r'artists', views.ArtistViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
