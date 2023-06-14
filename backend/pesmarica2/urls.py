@@ -15,21 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from rest_framework import routers
-from songs import views
+from rest_framework.schemas import get_schema_view
+from songs import urls as songs_urls
 
-
-# https://www.django-rest-framework.org/tutorial/quickstart/#urls
-#
-# Because we're using viewsets instead of views, we can automatically generate
-# the URL conf for our API, by simply registering the viewsets with a router class.
-router = routers.DefaultRouter()
-router.register(r'songs', views.SongViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    path('api/', include(songs_urls)),
+        path('api/schema', get_schema_view(
+        title="Pesmarica2 API",
+        version="1.0.0"
+    ), name='openapi-schema'),
     re_path(r'^api/auth/', include('djoser.urls.base')),
     re_path(r'^api/auth/', include('djoser.urls.authtoken')),
     re_path(r"^api/auth/", include("djoser.urls.jwt")),
+
 ]
