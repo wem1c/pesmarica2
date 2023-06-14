@@ -1,9 +1,17 @@
 from rest_framework import serializers
-
-from songs.models import Song
+from django.contrib.auth.models import User
+from songs.models import Song, Artist
 
 
 class SongSerializer(serializers.HyperlinkedModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+
     class Meta:
         model = Song
-        fields = ['title', 'lyrics']
+        fields = ['url', 'id', 'title', 'album', 'artist', 'genre', 'year', 'lyrics', 'owner']
+
+class ArtistSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Artist
+        fields = ['url', 'id', 'name', 'songs']
