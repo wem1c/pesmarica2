@@ -29,6 +29,8 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['pesmarica2-production-91cd.up.railway.app']
 
+CSRF_TRUSTED_ORIGINS = ['https://pesmarica2-production-91cd.up.railway.app']
+
 # Application definition
 
 INSTALLED_APPS = [
