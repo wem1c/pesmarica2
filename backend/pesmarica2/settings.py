@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['pesmarica2-production-91cd.up.railway.app']
+ALLOWED_HOSTS = ['pesmarica2-production-91cd.up.railway.app', '127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS = ['https://pesmarica2-production-91cd.up.railway.app']
 
