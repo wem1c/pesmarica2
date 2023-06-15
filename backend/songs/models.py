@@ -21,3 +21,6 @@ class Song(models.Model):
     lyrics = models.TextField()
     owner = models.ForeignKey('auth.User', related_name='songs', on_delete=models.CASCADE)
     #duration
+
+    class Meta:
+        ordering = ('title',)
