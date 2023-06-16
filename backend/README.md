@@ -31,7 +31,7 @@ https://github.com/othneildrew/Best-README-Template/blob/master/README.md -->
   <h3 align="center">Pesmarica 2: Electric Boogaloo</h3>
   <br>
   <p align="center">
-    <a href="">Visit Website</a>
+    <a href="https://pesmarica2-production-91cd.up.railway.app/api">API URL</a>
     ·
     <a href="https://github.com/wem1c/pesmarica2/issues">Report Bug</a>
     ·
@@ -147,6 +147,20 @@ python manage.py runserver
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- USAGE -->
+
+## Usage
+
+### API Schema
+
+The API schema is available:
+
+-   in the file `/backend/openapi-schema.yml`
+-   at an endpoint at [/api/schema](https://pesmarica2-production-91cd.up.railway.app/api/schema)
+-   as an online doc via [Redoc](https://redocly.github.io/redoc/?url=https://pesmarica2-production-91cd.up.railway.app/api/schema).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- CONTACT -->
 
 ## Contact
@@ -165,6 +179,8 @@ Project Link: [https://github.com/wem1c/pesmarica2](https://github.com/wem1c/pes
 -   [mdn web docs](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django)
 -   [SQLite](https://www.sqlite.org/)
 -   [PostgreSQL](https://www.postgresql.org/)
+-   [OpenAPI](https://www.openapis.org/)
+-   [Redoc](https://redocly.github.io/redoc/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
