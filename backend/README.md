@@ -29,6 +29,7 @@ https://github.com/othneildrew/Best-README-Template/blob/master/README.md -->
   </a>
 
   <h3 align="center">Pesmarica 2: Electric Boogaloo</h3>
+  <h3 align="center"><strong>BACKEND</strong></h3>
   <br>
   <p align="center">
     <a href="https://pesmarica2-production-91cd.up.railway.app/api">API URL</a>
@@ -66,7 +67,7 @@ https://github.com/othneildrew/Best-README-Template/blob/master/README.md -->
 
 ## About The Project
 
-This doc explains how the backend of the [main project](https://github.com/wem1c/pesmarica2) works.
+This doc explains how the **backend** of the [main project](https://github.com/wem1c/pesmarica2) works.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
