@@ -13,6 +13,9 @@ class SongViewSet(viewsets.ModelViewSet):
     serializer_class = SongSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 class ArtistViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows songs to be viewed or edited.
