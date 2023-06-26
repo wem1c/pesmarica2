@@ -140,6 +140,11 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
+9. collect static files
+```sh
+python3 manage.py collectstatic
+```
+
 8. run the server
 
 ```sh
