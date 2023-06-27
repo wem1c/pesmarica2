@@ -1,4 +1,5 @@
 asgiref==3.6.0
+attrs==23.1.0
 beautifulsoup4==4.12.2
 certifi==2023.5.7
 cffi==1.15.1
@@ -11,13 +12,17 @@ django-templated-mail==1.1.1
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 djoser==2.2.0
+drf-spectacular==0.26.3
 gunicorn==20.1.0
 idna==3.4
+inflection==0.5.1
+jsonschema==4.17.3
 lxml==4.9.2
 oauthlib==3.2.2
 psycopg2-binary==2.9.6
 pycparser==2.21
 PyJWT==2.7.0
+pyrsistent==0.19.3
 python3-openid==3.2.0
 pytz==2023.3
 PyYAML==6.0
