@@ -33,3 +33,9 @@ def filter_artists(request: Request, letter: str) -> Response:
     queryset = Artist.objects.filter(name__istartswith=letter)
     serializer = ArtistSerializer(queryset, many=True, context={'request': request})
     return Response(serializer.data)
+
+@api_view(['GET'])
+def search_by_genre(request: Request, genre: str) -> Response:
+    queryset = Song.objects.filter(genre__icontains=genre)
+    serializer = SongSerializer(queryset, many=True, context={'request': request})
+    return Response(serializer.data)
