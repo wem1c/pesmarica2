@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 
 class Artist(models.Model):
@@ -12,7 +13,7 @@ class Artist(models.Model):
         ordering = ('name',)
 
 class Song(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateField(default=datetime.date.today)
     title = models.CharField(max_length=100)
     album = models.CharField(max_length=100)
     artist = models.ForeignKey(Artist, related_name='songs', on_delete=models.CASCADE)
