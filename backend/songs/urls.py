@@ -11,4 +11,5 @@ router.register(r'artists', views.ArtistViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('artists/filter-by-letter/<str:letter>/', views.filter_artists, name='filtered-artists'),
 ]
