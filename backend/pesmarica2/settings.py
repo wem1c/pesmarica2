@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'drf_spectacular',
+    'corsheaders',
 
     # our apps
     'songs'
@@ -60,6 +61,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # added
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'pesmarica2.urls'
@@ -167,3 +171,27 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False
 }
+
+# Django CORS
+
+# When you make requests from a React application running on
+# localhost while Django is also running on localhost, the requests are not allowed by default. 
+# This code fixes that issue.
+
+# Please note that this solution may not be suitable for deployment,
+# so I am going to comment it out so it does not interfere with for example railway.
+
+# Uncomment the following lines to allow requests from all origins:
+# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_METHODS = (
+#     "DELETE",
+#     "GET",
+#     "OPTIONS",
+#     "PATCH",
+#     "POST",
+#     "PUT",
+# )
+
+# Additionally, you should update the ALLOWED_HOSTS setting to:
+# ALLOWED_HOSTS = ['*']
+
