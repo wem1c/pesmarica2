@@ -26,7 +26,7 @@ import datetime
 # default user that creates all the songs. Put the username and email that you created
 user = User.objects.get(username='django', email='django@example.com')
 
-for i in range(2):
+for i in range(4):
     if i == 0:
         html_text = requests.get("http://www.pesmarica.rs/").text
     else:
@@ -57,6 +57,8 @@ for i in range(2):
         html_text2 = requests.get(f"http://www.pesmarica.rs{title_link}").text
         soup2 = BeautifulSoup(html_text2, 'lxml')
 
+        if soup2.find("pre") == None:
+            continue
         song = soup2.find("pre").text
 
         artist_exists = Artist.objects.filter(name=artist_name).first()
