@@ -6,7 +6,7 @@ from songs.permissions import IsOwnerOrReadOnly
 from rest_framework.decorators import  api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.request import Request
-from rest_framework import filters
+from rest_framework import filters, status
 
 
 class SongViewSet(viewsets.ModelViewSet):
@@ -53,4 +53,15 @@ def search_by_genre(request: Request, genre: str) -> Response:
 def search_by_author(request: Request, author_name: str) -> Response:
     queryset = Artist.objects.filter(name__icontains=author_name)
     serializer = ArtistSerializer(queryset, many=True, context={'request': request})
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def artist_songs(request: Request, artist_id: int) -> Response:
+    try:
+        artist = Artist.objects.get(pk=artist_id)
+    except Artist.DoesNotExist:
+        return Response({"message": "Artist not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    songs = artist.songs.all()
+    serializer = SongSerializer(songs, many=True, context={'request': request})
     return Response(serializer.data)
