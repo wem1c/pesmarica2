@@ -65,3 +65,10 @@ def artist_songs(request: Request, artist_id: int) -> Response:
     songs = artist.songs.all()
     serializer = SongSerializer(songs, many=True, context={'request': request})
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def search_by_title(request: Request, title: str) -> Response:
+    queryset = Song.objects.filter(title__icontains=title)
+    serializer = SongSerializer(queryset, many=True, context={'request': request})
+    return Response(serializer.data)
