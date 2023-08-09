@@ -5,9 +5,7 @@ const Pagination = ({ pages, currentPage, setCurrentPage }) => {
 				<button
 					onClick={() => {
 						setCurrentPage(
-							currentPage - 1 === 0 || currentPage - 1 < 0
-								? 1
-								: currentPage - 1
+							currentPage - 1 === 0 || currentPage - 1 < 0 ? 1 : currentPage - 1
 						);
 					}}
 					className="rounded-lg border px-4 py-2 duration-150 hover:bg-indigo-600 hover:text-white"
@@ -19,9 +17,7 @@ const Pagination = ({ pages, currentPage, setCurrentPage }) => {
 				</div>
 				<button
 					onClick={() => {
-						setCurrentPage(
-							currentPage + 1 > pages ? pages : currentPage + 1
-						);
+						setCurrentPage(currentPage + 1 > pages ? pages : currentPage + 1);
 					}}
 					className="rounded-lg border px-4 py-2 duration-150 hover:bg-indigo-600 hover:text-white"
 				>
