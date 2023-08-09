@@ -7,7 +7,6 @@ import Home from "./pages/Home";
 import ViewArtist from "./pages/ViewArtist";
 import Songs from "./pages/Songs";
 import ViewSong from "./pages/ViewSong";
-import About from "./pages/About";
 import Missing from "./pages/Missing";
 import SignIn from "./pages/SignIn";
 import Login from "./pages/Login";
@@ -28,7 +27,6 @@ const App = () => {
 					<Route path="/artists/:id" element={<ViewArtist />} />
 					<Route path="/songs" element={<Songs />} />
 					<Route path="/songs/:id" element={<ViewSong />} />
-					<Route path="/about" element={<About />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/signin" element={<SignIn />} />
 					<Route path="/add-song" element={<AddSong />} />

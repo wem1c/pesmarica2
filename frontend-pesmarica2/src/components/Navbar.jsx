@@ -10,7 +10,7 @@ const Navbar = () => {
 		{ title: "Home", path: "/" },
 		{ title: "Artists", path: "/artists" },
 		{ title: "Songs", path: "/songs" },
-		{ title: "About", path: "/about" },
+		{ title: "Add Song", path: "/add-song" },
 	];
 
 	const toggleNavbar = () => {
@@ -32,14 +32,10 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className=" fixed z-50  w-full border-b bg-white md:border-none md:text-sm">
-			<div className="mx-auto max-w-screen-xl items-center px-4 md:flex md:px-8">
+		<nav className="fixed z-50 w-full bg-white border-b  md:border-none md:text-sm">
+			<div className="items-center max-w-screen-xl px-4 mx-auto md:flex md:px-8">
 				<div className="flex items-center justify-between py-3 md:block md:py-5">
-					<Link
-						to="/"
-						onClick={closeNavbar}
-						className="text-lg uppercase"
-					>
+					<Link to="/" onClick={closeNavbar} className="text-lg uppercase">
 						Guitarists
 					</Link>
 					<div className="md:hidden">
@@ -50,7 +46,7 @@ const Navbar = () => {
 							{state ? (
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
-									className="h-6 w-6"
+									className="w-6 h-6"
 									viewBox="0 0 20 20"
 									fill="currentColor"
 								>
@@ -67,7 +63,7 @@ const Navbar = () => {
 									viewBox="0 0 24 24"
 									strokeWidth={1.5}
 									stroke="currentColor"
-									className="h-6 w-6"
+									className="w-6 h-6"
 								>
 									<path
 										strokeLinecap="round"
@@ -86,10 +82,7 @@ const Navbar = () => {
 				>
 					<ul className="items-center justify-end space-y-6 md:flex md:space-x-6 md:space-y-0">
 						{navigation.map((item, idx) => (
-							<li
-								key={idx}
-								className="text-gray-700 hover:text-indigo-600"
-							>
+							<li key={idx} className="text-gray-700 hover:text-indigo-600">
 								<Link
 									onClick={() => handleLinkClick(item)}
 									to={item.path}
@@ -99,15 +92,15 @@ const Navbar = () => {
 								</Link>
 							</li>
 						))}
-						<span className="hidden h-6 w-px bg-gray-300 md:block"></span>
+						<span className="hidden w-px h-6 bg-gray-300 md:block"></span>
 
 						{!userToken || !user ? (
-							<div className="items-center gap-x-6 space-y-3 md:flex md:space-y-0">
+							<div className="items-center space-y-3 gap-x-6 md:flex md:space-y-0">
 								<li>
 									<Link
 										onClick={closeNavbar}
 										to="/login"
-										className="block rounded-lg border py-3 text-center text-gray-700 hover:text-indigo-600 md:border-none"
+										className="block py-3 text-center text-gray-700 border rounded-lg hover:text-indigo-600 md:border-none"
 									>
 										Log in
 									</Link>
@@ -116,7 +109,7 @@ const Navbar = () => {
 									<Link
 										onClick={closeNavbar}
 										to="/signin"
-										className="block rounded-lg bg-indigo-600 px-4 py-3 text-center font-medium text-white shadow hover:bg-indigo-500 active:bg-indigo-700 active:shadow-none md:inline"
+										className="block px-4 py-3 font-medium text-center text-white bg-indigo-600 rounded-lg shadow hover:bg-indigo-500 active:bg-indigo-700 active:shadow-none md:inline"
 									>
 										Sign in
 									</Link>
