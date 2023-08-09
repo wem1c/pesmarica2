@@ -1,100 +1,107 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import DataContext from "../context/DataContext";
 import Pagination from "../components/Pagination";
-import api from "../api/pesmarica";
 import SearchField from "../components/SearchField";
+import FetchingStates from "../components/FetchingStates";
+
 const Artists = () => {
 	const {
 		artists,
-		setArtists,
-		numberOfArtistPage,
-		setNumberOfArtistPage,
 		currentArtistPage,
 		setCurrentArtistPage,
+		search,
+		setSearch,
+		hasUserSearched,
+		setHasUserSearched,
+		searchedArtists,
+		setArtistsOrSongs,
 	} = useContext(DataContext);
 
-	const [search, setSearch] = useState("");
-	const [hasUserSearched, setHasUserSearched] = useState(false);
+	useEffect(() => {
+		setArtistsOrSongs("artists");
+		setSearch("");
+	}, []);
 
-	const searchArtists = async () => {
-		try {
-			const response = await api.get(
-				`api/artists/search-by-author/${search}/`
-			);
+	if (hasUserSearched) {
+		return (
+			<div className="container mx-auto mt-8">
+				<SearchField search={search} setSearch={setSearch} />
 
-			setArtists(response.data);
-			setHasUserSearched(true);
-		} catch (err) {
-			if (err.response) {
-				console.log(err.response.data);
-				console.log(err.response.status);
-				console.log(err.response.headers);
-			} else {
-				console.log(`Error: ${err.message}`);
-			}
-		}
-	};
-
-	const fetchArtists = async () => {
-		try {
-			const response = await api.get(
-				`/api/artists/?ordering=name&page=${currentArtistPage}`
-			);
-
-			const responseData = response.data;
-			setNumberOfArtistPage(Math.floor(responseData.count / 10) + 1);
-			setArtists(responseData.results);
-		} catch (err) {
-			if (err.response) {
-				console.log(err.response.data);
-				console.log(err.response.status);
-				console.log(err.response.headers);
-			} else {
-				console.log(`Error: ${err.message}`);
-			}
-		}
-	};
-	return (
-		<div className="container mx-auto mt-8">
-			<SearchField
-				search={search}
-				setSearch={setSearch}
-				funToBeCalled={searchArtists}
-			/>
-
-			<ul>
-				{artists.map((artist) => (
-					<li
-						key={artist.id}
-						className="mb-5 rounded-lg bg-slate-100 p-4 text-lg capitalize"
-					>
-						<Link to={`${artist.id}`}>{artist.name}</Link>
-					</li>
-				))}
-			</ul>
-
-			{!hasUserSearched ? (
-				<Pagination
-					pages={numberOfArtistPage}
-					setPages={setNumberOfArtistPage}
-					currentPage={currentArtistPage}
-					setCurrentPage={setCurrentArtistPage}
+				<FetchingStates
+					queryResult={searchedArtists}
+					queryData={searchedArtists.data}
+					skeletonLength={10}
+					variantLatest={false}
 				/>
-			) : (
-				<button
-					onClick={() => {
-						fetchArtists();
-						setHasUserSearched(false);
-						setSearch("");
-					}}
-					className="mt-2 text-blue-700 underline"
-				>
-					Clear the search
-				</button>
-			)}
-		</div>
-	);
+
+				{searchedArtists.isSuccess &&
+					!searchedArtists.isRefetching &&
+					searchedArtists.data.length > 0 && (
+						<div>
+							<ul>
+								{searchedArtists.data.map((artist) => (
+									<li
+										key={artist.id}
+										className="p-4 mb-5 text-lg capitalize rounded-lg bg-slate-100"
+									>
+										<Link to={`${artist.id}`}>{artist.name}</Link>
+									</li>
+								))}
+							</ul>
+
+							<button
+								onClick={() => {
+									setHasUserSearched(false);
+									setSearch("");
+									setCurrentArtistPage(1);
+								}}
+								className="mt-2 text-blue-700 underline"
+							>
+								Clear the search
+							</button>
+						</div>
+					)}
+			</div>
+		);
+	} else {
+		return (
+			<div className="container mx-auto mt-8">
+				<SearchField search={search} setSearch={setSearch} />
+
+				<FetchingStates
+					queryResult={artists}
+					queryData={artists?.data?.results}
+					skeletonLength={10}
+					variantLatest={false}
+				/>
+
+				{artists.isSuccess &&
+				!artists.isRefetching &&
+				artists.data.results.length > 0 ? (
+					<div>
+						<ul>
+							{artists.data.results.map((artist) => (
+								<li
+									key={artist.id}
+									className="p-4 mb-5 text-lg capitalize rounded-lg bg-slate-100"
+								>
+									<Link to={`${artist.id}`}>{artist.name}</Link>
+								</li>
+							))}
+						</ul>
+
+						<Pagination
+							artists={artists}
+							pages={Math.floor(artists.data.count / 10) + 1}
+							currentPage={currentArtistPage}
+							setCurrentPage={setCurrentArtistPage}
+						/>
+					</div>
+				) : null}
+			</div>
+		);
+	}
 };
 
 export default Artists;

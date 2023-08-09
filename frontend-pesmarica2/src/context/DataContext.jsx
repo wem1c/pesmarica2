@@ -1,87 +1,97 @@
-import { createContext, useEffect, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { createContext, useState } from "react";
 
-import api from "../api/pesmarica.js";
+import {
+	getSongs,
+	searchSongs,
+	getArtists,
+	searchArtists,
+	getSingleArtist,
+	getUserToken,
+	createUser,
+} from "../api/pesmarica";
 
 const DataContext = createContext({});
 
 export const DataProvider = ({ children }) => {
-	const [latestSongs, setLatestSongs] = useState([]);
-	const [numberOfSongPages, setNumberOfSongPages] = useState([]);
 	const [currentSongPage, setCurrentSongPage] = useState(1);
+	const [songId, setSongId] = useState();
 
-	const [artists, setArtists] = useState([]);
-	const [numberOfArtistPage, setNumberOfArtistPage] = useState([]);
 	const [currentArtistPage, setCurrentArtistPage] = useState(1);
+	const [artistId, setArtistId] = useState("");
+
+	const [search, setSearch] = useState("");
+	const [hasUserSearched, setHasUserSearched] = useState(false);
+	const [artistsOrSongs, setArtistsOrSongs] = useState("");
 
 	const [user, setUser] = useState("");
 	const [userToken, setUserToken] = useState("");
 
-	useEffect(() => {
-		const fetchLatestSongs = async () => {
-			try {
-				const response = await api.get(
-					`/api/songs/?ordering=-created_at&page=${currentSongPage}`
-				);
+	const songs = useQuery({
+		queryKey: ["/api/songs/?ordering=-created_at&page=", currentSongPage],
+		queryFn: () => getSongs(currentSongPage),
+		keepPreviousData: true,
+	});
 
-				const responseData = response.data;
-				setNumberOfSongPages(Math.floor(responseData.count / 10) + 1);
-				setLatestSongs(responseData.results);
-			} catch (err) {
-				if (err.response) {
-					console.log(err.response.data);
-					console.log(err.response.status);
-					console.log(err.response.headers);
-				} else {
-					console.log(`Error: ${err.message}`);
-				}
-			}
-		};
-		fetchLatestSongs();
-	}, [currentSongPage]);
+	const searchedSongs = useQuery({
+		queryKey: ["api/artists/search-by-author/", search],
+		queryFn: () => searchSongs(search),
+		enabled: hasUserSearched === true && artistsOrSongs === "songs",
+	});
 
-	useEffect(() => {
-		const fetchArtists = async () => {
-			try {
-				const response = await api.get(
-					`/api/artists/?ordering=name&page=${currentArtistPage}`
-				);
+	const artists = useQuery({
+		queryKey: ["/api/artists/?ordering=name&page=", currentArtistPage],
+		queryFn: () => getArtists(currentArtistPage),
+		keepPreviousData: true,
+	});
 
-				const responseData = response.data;
-				setNumberOfArtistPage(Math.floor(responseData.count / 10) + 1);
-				setArtists(responseData.results);
-			} catch (err) {
-				if (err.response) {
-					console.log(err.response.data);
-					console.log(err.response.status);
-					console.log(err.response.headers);
-				} else {
-					console.log(`Error: ${err.message}`);
-				}
-			}
-		};
-		fetchArtists();
-	}, [currentArtistPage]);
+	const searchedArtists = useQuery({
+		queryKey: ["api/artists/search-by-author/", search],
+		queryFn: () => searchArtists(search),
+		enabled: hasUserSearched === true && artistsOrSongs === "artists",
+	});
+
+	const singleArtist = useQuery({
+		queryKey: ["/api/artists/", artistId, "/songs/"],
+		queryFn: () => getSingleArtist(artistId),
+		enabled: !!artistId, // This will prevent the query from running if artistId is null or undefined
+	});
+
+	const getUserTokenMutation = useMutation({ mutationFn: getUserToken });
+
+	const createUserMutation = useMutation({ mutationFn: createUser });
 
 	return (
 		<DataContext.Provider
 			value={{
-				latestSongs,
-				setLatestSongs,
-				artists,
-				setArtists,
-				numberOfSongPages,
-				setNumberOfSongPages,
+				songs,
 				currentSongPage,
 				setCurrentSongPage,
-				numberOfArtistPage,
-				setNumberOfArtistPage,
+				searchedSongs,
+				songId,
+				setSongId,
+
+				artists,
 				currentArtistPage,
 				setCurrentArtistPage,
+				searchedArtists,
+				singleArtist,
+				artistId,
+				setArtistId,
+
+				search,
+				setSearch,
+				hasUserSearched,
+				setHasUserSearched,
+				artistsOrSongs,
+				setArtistsOrSongs,
+
 				user,
 				setUser,
 				userToken,
 				setUserToken,
+				getUserTokenMutation,
+				createUserMutation,
 			}}
 		>
 			{children}

@@ -82,9 +82,7 @@ const ViewSong = () => {
 							return (
 								<span
 									className="chords"
-									onMouseEnter={(e) =>
-										handleMouseEnter(chord, e)
-									}
+									onMouseEnter={(e) => handleMouseEnter(chord, e)}
 									onMouseLeave={handleMouseLeave}
 								>
 									{domNode.children[0].data}
@@ -122,9 +120,7 @@ const ViewSong = () => {
 
 		chordSpans.forEach((span) => {
 			const chord = span.textContent;
-			span.addEventListener("mouseenter", () =>
-				onMouseEnterHandler(chord)
-			);
+			span.addEventListener("mouseenter", () => onMouseEnterHandler(chord));
 			span.addEventListener("mouseleave", onMouseLeaveHandler);
 		});
 
@@ -143,9 +139,7 @@ const ViewSong = () => {
 		<>
 			<div className="container mx-auto  ">
 				<div className="mb-4 grid grid-cols-4 items-center gap-4 rounded-lg bg-slate-100 p-5">
-					<p className="col-span-2 text-lg font-bold md:col-span-1">
-						Artist
-					</p>
+					<p className="col-span-2 text-lg font-bold md:col-span-1">Artist</p>
 					<Link
 						to={`/artists/${artistID}`}
 						className="col-span-2 underline underline-offset-4 hover:text-indigo-600 md:col-span-3"
@@ -169,9 +163,7 @@ const ViewSong = () => {
 				</div>
 
 				<div className="mb-4 grid grid-cols-4 items-center gap-4 rounded-lg bg-slate-100 p-5 ">
-					<p className="col-span-2 text-lg font-bold md:col-span-1">
-						User
-					</p>
+					<p className="col-span-2 text-lg font-bold md:col-span-1">User</p>
 					<p className="col-span-2 md:col-span-3"> {song.owner}</p>
 				</div>
 
@@ -179,10 +171,7 @@ const ViewSong = () => {
 					<p className="col-span-2 text-lg font-bold md:col-span-1">
 						Date created
 					</p>
-					<p className="col-span-2 md:col-span-3">
-						{" "}
-						{song.created_at}
-					</p>
+					<p className="col-span-2 md:col-span-3"> {song.created_at}</p>
 				</div>
 
 				{/* {hoveredChord && (
@@ -198,15 +187,19 @@ const ViewSong = () => {
 					{lyrics}
 				</div> */}
 
-				<div
-					ref={lyricsRef}
-					className="overflow-x-scroll whitespace-pre-wrap font-mono [&>span]:text-blue-400"
-					onMouseMove={(e) =>
-						setMousePosition({ x: e.clientX, y: e.clientY })
-					}
-				>
-					{lyrics}
+				<div className="rounded-lg bg-slate-100 p-5">
+					<p className="text-lg font-bold mb-6">Lyrics</p>
+					<div
+						ref={lyricsRef}
+						className="overflow-x-scroll whitespace-pre-wrap font-mono [&>span]:text-blue-400"
+						onMouseMove={(e) =>
+							setMousePosition({ x: e.clientX, y: e.clientY })
+						}
+					>
+						{lyrics}
+					</div>{" "}
 				</div>
+
 				{hoveredChord && (
 					<div
 						className="chord-image-card"

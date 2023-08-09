@@ -1,6 +1,8 @@
-import React from "react";
+import { useContext } from "react";
+import DataContext from "../context/DataContext";
 
-const SearchField = ({ search, setSearch, funToBeCalled }) => {
+const SearchField = ({ search, setSearch }) => {
+	const { setHasUserSearched } = useContext(DataContext);
 	return (
 		<div className="mb-6 rounded-lg border border-gray-200">
 			<div className="relative">
@@ -9,10 +11,15 @@ const SearchField = ({ search, setSearch, funToBeCalled }) => {
 					className="w-full rounded-lg border-gray-500 p-4 pe-12 text-sm shadow-sm outline-none"
 					placeholder="Search"
 					value={search}
-					onChange={(e) => setSearch(e.target.value)}
+					onChange={(e) => {
+						setSearch(e.target.value);
+						setHasUserSearched(false);
+					}}
 				/>
 				<button
-					onClick={funToBeCalled}
+					onClick={() => {
+						setHasUserSearched(true);
+					}}
 					className="absolute inset-y-0 end-0 grid place-content-center rounded-lg bg-blue-700 px-4 "
 				>
 					<svg

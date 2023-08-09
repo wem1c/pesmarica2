@@ -25,7 +25,7 @@ const AddSong = () => {
 	// 	"owner": "django"
 	// }
 	return (
-		<div className="container mx-auto max-w-screen-md ">
+		<div className="container max-w-screen-md mx-auto ">
 			<h2 className="mt-6 text-3xl font-extrabold text-neutral-600">
 				Add Song
 			</h2>
@@ -45,7 +45,7 @@ const AddSong = () => {
 							type="text"
 							required
 							placeholder="Song Title"
-							className="block w-full transform rounded-lg border border-transparent bg-gray-50 px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+							className="block w-full px-5 py-3 text-base placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 text-neutral-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
 							value={songTitle}
 							onChange={(e) => {
 								setSongTitle(e.target.value);
@@ -66,18 +66,18 @@ const AddSong = () => {
 							type="text"
 							list="HeadlineActArtist"
 							id="HeadlineAct"
-							className="w-full rounded-lg border-gray-300 pe-10 text-gray-700 sm:text-sm [&::-webkit-calendar-picker-indicator]:opacity-0"
+							className="w-full block  px-5 py-3 text-base placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 text-neutral-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300  border-gray-300 pe-10 sm:text-sm [&::-webkit-calendar-picker-indicator]:opacity-0"
 							placeholder="Please select"
 						/>
 
-						<span className="absolute inset-y-0 end-0 flex w-8 items-center">
+						<span className="absolute inset-y-0 flex items-center w-8 end-0">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
 								viewBox="0 0 24 24"
 								strokeWidth="1.5"
 								stroke="currentColor"
-								className="h-5 w-5 text-gray-500"
+								className="w-5 h-5 text-gray-500"
 							>
 								<path
 									strokeLinecap="round"
@@ -89,13 +89,13 @@ const AddSong = () => {
 					</div>
 
 					<datalist name="HeadlineAct" id="HeadlineActArtist">
-						<option value="JM">John Mayer</option>
-						<option value="SRV">Stevie Ray Vaughn</option>
-						<option value="JH">Jimi Hendrix</option>
-						<option value="BBK">B.B King</option>
-						<option value="AK">Albert King</option>
-						<option value="BG">Buddy Guy</option>
-						<option value="EC">Eric Clapton</option>
+						<option>John Mayer</option>
+						<option>Stevie Ray Vaughn</option>
+						<option>Jimi Hendrix</option>
+						<option>B.B King</option>
+						<option>Albert King</option>
+						<option>Buddy Guy</option>
+						<option>Eric Clapton</option>
 					</datalist>
 				</div>
 
@@ -113,7 +113,7 @@ const AddSong = () => {
 							type="text"
 							required
 							placeholder="Song Title"
-							className="block w-full transform rounded-lg border border-transparent bg-gray-50 px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+							className="block w-full px-5 py-3 text-base placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 text-neutral-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
 							value={songTitle}
 							onChange={(e) => {
 								setSongTitle(e.target.value);
@@ -140,7 +140,7 @@ const AddSong = () => {
 				<div>
 					<button
 						type="submit"
-						className="flex w-60 transform items-center justify-center rounded-xl bg-blue-600 px-10 py-4 text-center text-base font-medium text-white transition duration-500 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+						className="flex items-center justify-center px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 w-60 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
 					>
 						Submit
 					</button>

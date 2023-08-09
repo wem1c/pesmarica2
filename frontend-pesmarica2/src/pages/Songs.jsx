@@ -1,103 +1,112 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import DataContext from "../context/DataContext";
 import Pagination from "../components/Pagination";
 import SearchField from "../components/SearchField";
-import api from "../api/pesmarica";
-const Songs = () => {
+import FetchingStates from "../components/FetchingStates";
+
+const Artists = () => {
 	const {
-		latestSongs,
-		setLatestSongs,
-		numberOfSongPages,
-		setNumberOfSongPages,
+		songs,
 		currentSongPage,
 		setCurrentSongPage,
+		searchedSongs,
+
+		search,
+		setSearch,
+		hasUserSearched,
+		setHasUserSearched,
+
+		setArtistsOrSongs,
 	} = useContext(DataContext);
 
-	const [search, setSearch] = useState("");
-	const [hasUserSearched, setHasUserSearched] = useState(false);
+	useEffect(() => {
+		setArtistsOrSongs("songs");
+		setSearch("");
+	}, []);
 
-	const searchSongs = async () => {
-		try {
-			const response = await api.get(
-				`api/songs/search-by-title/${search}/`
-			);
+	if (hasUserSearched) {
+		return (
+			<div className="container mx-auto mt-8 ">
+				<SearchField search={search} setSearch={setSearch} />
 
-			setLatestSongs(response.data);
-			setHasUserSearched(true);
-		} catch (err) {
-			if (err.response) {
-				console.log(err.response.data);
-				console.log(err.response.status);
-				console.log(err.response.headers);
-			} else {
-				console.log(`Error: ${err.message}`);
-			}
-		}
-	};
-
-	const fetchSongs = async () => {
-		try {
-			const response = await api.get(
-				`/api/songs/?ordering=-created_at&page=${currentSongPage}`
-			);
-
-			const responseData = response.data;
-			setNumberOfSongPages(Math.floor(responseData.count / 10) + 1);
-			setLatestSongs(responseData.results);
-		} catch (err) {
-			if (err.response) {
-				console.log(err.response.data);
-				console.log(err.response.status);
-				console.log(err.response.headers);
-			} else {
-				console.log(`Error: ${err.message}`);
-			}
-		}
-	};
-
-	return (
-		<div className="container mx-auto mt-8">
-			<SearchField
-				search={search}
-				setSearch={setSearch}
-				funToBeCalled={searchSongs}
-			/>
-
-			<ul>
-				{latestSongs.map((song) => (
-					<li
-						key={song.id}
-						className="mb-5 rounded-lg bg-slate-100 p-4 text-lg capitalize"
-					>
-						<Link to={`${song.id}`}>
-							{song.title} - {song.artist.name}
-						</Link>
-					</li>
-				))}
-			</ul>
-
-			{!hasUserSearched ? (
-				<Pagination
-					pages={numberOfSongPages}
-					setPages={setNumberOfSongPages}
-					currentPage={currentSongPage}
-					setCurrentPage={setCurrentSongPage}
+				<FetchingStates
+					queryResult={searchedSongs}
+					queryData={searchedSongs.data}
+					skeletonLength={10}
+					variantLatest={false}
 				/>
-			) : (
-				<button
-					onClick={() => {
-						fetchSongs();
-						setHasUserSearched(false);
-						setSearch("");
-					}}
-					className="mt-2 text-blue-700 underline"
-				>
-					Clear the search
-				</button>
-			)}
-		</div>
-	);
+
+				{searchedSongs.isSuccess &&
+					!searchedSongs.isRefetching &&
+					searchedSongs.data.length > 0 && (
+						<div>
+							<ul>
+								{searchedSongs.data.map((song) => (
+									<li
+										key={song.id}
+										className="p-4 mb-5 text-lg capitalize rounded-lg bg-slate-100"
+									>
+										<Link to={`${song.id}`}>
+											{song.title} - {song.artist.name}
+										</Link>
+									</li>
+								))}
+							</ul>
+
+							<button
+								onClick={() => {
+									setHasUserSearched(false);
+									setSearch("");
+									setCurrentSongPage(1);
+								}}
+								className="mt-2 text-blue-700 underline"
+							>
+								Clear the search
+							</button>
+						</div>
+					)}
+			</div>
+		);
+	} else {
+		return (
+			<div className="container mx-auto mt-8">
+				<SearchField search={search} setSearch={setSearch} />
+
+				<FetchingStates
+					queryResult={songs}
+					queryData={songs?.data?.results}
+					skeletonLength={10}
+					variantLatest={false}
+				/>
+
+				{songs.isSuccess &&
+					!songs.isRefetching &&
+					songs.data.results.length > 0 && (
+						<div>
+							<ul>
+								{songs.data.results.map((song) => (
+									<li
+										key={song.id}
+										className="p-4 mb-5 text-lg capitalize rounded-lg bg-slate-100"
+									>
+										<Link to={`${song.id}`}>
+											{song.title} - {song.artist.name}
+										</Link>
+									</li>
+								))}
+							</ul>
+
+							<Pagination
+								pages={Math.floor(songs.data.count / 10) + 1}
+								currentPage={currentSongPage}
+								setCurrentPage={setCurrentSongPage}
+							/>
+						</div>
+					)}
+			</div>
+		);
+	}
 };
 
-export default Songs;
+export default Artists;
